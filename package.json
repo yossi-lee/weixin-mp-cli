@@ -1,6 +1,6 @@
 {
   "name": "@yossi-lee/weixin-mp-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "微信公众号 CLI 工具，支持从 Markdown 创建草稿、发布文章、管理素材",
   "type": "module",
   "main": "bin/wx.js",
