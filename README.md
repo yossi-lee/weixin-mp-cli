@@ -1,6 +1,6 @@
 # weixin-mp-cli
 
-微信公众号 CLI 工具，支持从 Markdown 文件创建草稿、发布文章、管理素材。
+微信公众号 CLI 工具，支持从 Markdown / HTML 文件创建草稿、发布文章、管理素材。
 
 ## 安装
 
@@ -40,10 +40,10 @@ weixin-mp-cli init
 
 ### create
 
-从 Markdown 文件创建草稿，自动上传正文内图片和封面。
+从 Markdown 或 HTML 文件创建草稿。传入 `.md` 文件时自动转换并上传正文图片，传入 `.html` 文件时直接使用。
 
 ```bash
-weixin-mp-cli create <markdown-file> [options]
+weixin-mp-cli create <file> [options]
 ```
 
 | 选项 | 说明 |

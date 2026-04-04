@@ -45,28 +45,31 @@ program
   });
 
 program
-  .command('create <markdown-file>')
-  .description('从 Markdown 文件创建草稿')
+  .command('create <file>')
+  .description('从 Markdown 或 HTML 文件创建草稿')
   .option('-t, --title <title>', '文章标题')
   .option('-a, --author <author>', '作者')
   .option('-d, --digest <digest>', '摘要')
   .option('-c, --cover <image-path>', '封面图片路径')
   .option('-u, --url <url>', '原文链接')
   .option('--comment', '开启评论', false)
-  .action(async (mdFile, options) => {
+  .action(async (file, options) => {
     try {
-      const mdPath = path.resolve(mdFile);
-      if (!fs.existsSync(mdPath)) {
-        console.error(chalk.red(`❌ 文件不存在: ${mdPath}`));
+      const filePath = path.resolve(file);
+      if (!fs.existsSync(filePath)) {
+        console.error(chalk.red(`❌ 文件不存在: ${filePath}`));
         process.exit(1);
       }
+
+      const ext = path.extname(filePath).toLowerCase();
+      const isHtml = ext === '.html' || ext === '.htm';
 
       const answers = await inquirer.prompt([
         {
           type: 'input',
           name: 'title',
           message: '文章标题:',
-          default: options.title || path.basename(mdPath, path.extname(mdPath)),
+          default: options.title || path.basename(filePath, path.extname(filePath)),
           when: !options.title,
         },
         {
@@ -104,10 +107,16 @@ program
         console.log(chalk.green(`✅ 封面上传成功，media_id: ${media_id}`));
       }
 
-      console.log(chalk.cyan('\n📝 解析 Markdown 并上传正文图片...'));
-      const htmlContent = await markdownToHtml(mdPath, (msg) => {
-        console.log(chalk.gray(`   ${msg}`));
-      });
+      let htmlContent;
+      if (isHtml) {
+        console.log(chalk.cyan('\n📄 读取 HTML 文件...'));
+        htmlContent = fs.readFileSync(filePath, 'utf-8');
+      } else {
+        console.log(chalk.cyan('\n📝 解析 Markdown 并上传正文图片...'));
+        htmlContent = await markdownToHtml(filePath, (msg) => {
+          console.log(chalk.gray(`   ${msg}`));
+        });
+      }
 
       console.log(chalk.cyan('\n📨 提交草稿...'));
       const mediaId = await addDraft({
