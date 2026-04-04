@@ -8,7 +8,8 @@
     "weixin-mp-cli": "./bin/wx.js"
   },
   "scripts": {
-    "wx": "node bin/wx.js"
+    "wx": "node bin/wx.js",
+    "publish": "pnpm publish --access public --registry=https://registry.npmjs.org/ --no-git-checks"
   },
   "files": [
     "bin",
