@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-npm install -g weixin-mp-cli
+npm install -g @yossi-lee/weixin-mp-cli
 ```
 
 或在项目本地使用：
@@ -146,4 +146,4 @@ weixin-mp-cli/
 
 ## License
 
-MIT
+Apache-2.0
