@@ -93,13 +93,22 @@ npm install -g @yossi-lee/weixin-mp-cli
 
 向用户询问（或从上下文中提取）以下信息：
 
-- **title** — 文章标题
-- **author** — 作者名
-- **body** — 文章正文（Markdown 格式）
-- **cover** — 封面图片路径（本地文件，用于创建草稿时上传）
-- **theme** — WeMD 排版主题（默认：`default`）。可用主题：`basic`、`default`、`academic`、`aurora`、`bauhaus`、`cyberpunk`、`knowledge`、`luxury`、`morandi`、`brutalism`、`receipt`、`sunset`、`github`
+- **title** — 文章标题 **（必填）**
+- **author** — 作者名 **（必填）**
+- **body** — 文章正文（Markdown 格式） **（必填）**
+- **cover** — 封面图片路径（本地文件，用于创建草稿时上传） **（必填）**
+- **theme** — WeMD 排版主题（默认：`luxury`）。可用主题：`basic`、`default`、`academic`、`aurora`、`bauhaus`、`cyberpunk`、`knowledge`、`luxury`、`morandi`、`brutalism`、`receipt`、`sunset`、`github`
 
-如果缺少任何字段，主动询问用户。在继续之前确认所有材料。
+### 必填字段校验
+
+**title、author、body、cover 为必填字段。** 在执行后续步骤前，必须确保这四个字段都已提供：
+
+1. 首先尝试从用户提供的材料或上下文中提取这四个字段
+2. 如果用户未提供某个必填字段，或从提供的内容中无法提取出该字段，**必须停止并让用户补充**
+3. 明确告知用户缺少哪个字段，并等待用户提供后再继续
+4. 不可使用默认值或猜测值替代必填字段
+
+在继续之前确认所有材料。
 
 ## 步骤 3：创建文件
 
